@@ -1,0 +1,18 @@
+name: Build icbm2 for all platoforms on push
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: dart-lang/setup-dart@v1
+            - run: dart pub get
+            - run: dart compile exe bin/urlshort.dart -o bin/urlshort-linux
+            - uses: actions/upload-artifact@v3
+              with:
+                name: urlshort-linux
+                path: bin/urlshort-linux
