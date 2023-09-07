@@ -37,7 +37,9 @@ final app = Alfred()
   })
   ..post('/', (req, res) async {
     final body = await req.bodyAsJsonMap;
-    await urls.put(body['id'], body['url']);
+    if (!urls.containsKey(body['id'])) {
+      await urls.put(body['id'], body['url']);
+    }
     await res.found('/');
   });
 
